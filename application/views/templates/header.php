@@ -47,9 +47,9 @@
                 Census
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="<?php echo base_url()."encounters/show_active_consults";?>">Active Emergency Consults</a>
-                <a class="dropdown-item" href="<?php echo base_url()."encounters/show_admissions";?>">Admissions List</a>
-                <a class="dropdown-item" href="<?php echo base_url()."encounters/select_period_consults";?>">Period Emergency Consults</a>
+                <a class="dropdown-item" href="<?php echo base_url()."consults/show_active_consults";?>">Active Emergency Consults</a>
+                <a class="dropdown-item" href="<?php echo base_url()."admissions/show_admissions";?>">Admissions List</a>
+                <a class="dropdown-item" href="<?php echo base_url()."consults/select_period_consults";?>">Period Emergency Consults</a>
 
               </div>
             </li>

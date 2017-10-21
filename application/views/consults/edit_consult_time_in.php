@@ -11,7 +11,7 @@ foreach ($current_time_in as $row)
 {
   $time_in_value = $row->time_in;
 }
-echo form_open('encounters/edit_consult_time_in/'.$consult_id);
+echo form_open('consults/edit_consult_time_in/'.$consult_id);
 ?>
 <div class="row">
   <div class="col-1"></div>

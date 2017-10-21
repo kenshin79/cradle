@@ -8,10 +8,10 @@
 </div>
 <?php
   if($encounter == 1){
-    $target = 'encounters/new_consult';
+    $target = 'consults/new_consult';
   }
   elseif ($encounter == 2) {
-    $target = 'encounters/new_admission';
+    $target = 'admissions/new_admission';
   }
   if($search_results)
   {

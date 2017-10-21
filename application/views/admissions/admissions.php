@@ -29,19 +29,21 @@
           $city_province = $pow->{$this->config->item('city_province')};
         }
         $age = date_diff(date_create($birth_date), date_create(date('Y-m-d')))->y;
+        $days = date_diff(date_create(date('Y-m-d H:i:s')), date_create($row->date_in." ".$row->time_in))->d;
         $transfers = $this->transfers_model->get_transfers($row->id);
         echo "<tr>";
         echo "<td>".$count."</td>";
         echo "<td>".$last_name.", ".$first_name." ".$middle_name;
         echo " ".$age."/".$sex."<br />";
-        echo "Case no.:".$case_number."<br />";
-        echo "Source:<a href=\"\">".$row->source."</a></td>";
+        echo "Case no: ".$case_number."<br />";
+        echo "Source: <a href=\"".base_url()."admissions/edit_source/".$row->id."\">".$row->source."</a></td>";
         echo "<td>Date<br/><a href=\"\">".$row->date_in."</a><br />";
-        echo "Time<br/><a href=\"\">".$row->time_in."</a></td>";
-        echo "<td>Initial<br/><a href=\"\">".$row->initial_service."</a><br />";
-        echo "Current<br/>".$row->current_service."</td>";
-        echo "<td>Initial<br/><a href=\"\">".$row->initial_location."</a><br/>";
-        echo "Current<br/>".$row->current_location."<br/>";
+        echo "Time<br/><a href=\"\">".$row->time_in."</a><br/>";
+        echo $days." days</td>";
+        echo "<td>Current:<br/>".$row->current_service."<br />";
+        echo "Initial:<br/><a href=\"\">".$row->initial_service."</a></td>";
+        echo "<td>Curent:<br/>".$row->current_location."<br/>";
+        echo "Initial:<br/><a href=\"\">".$row->initial_location."</a><br/>";
         echo "<a class=\"btn btn-primary\" href=\"".base_url()."transfers/add_transfer/".$row->id."/".$row->patient_id."\" >Add Transfer</a></td>";
         echo "<td><a href=\"\">".$row->disposition."</a><br/>";
         echo "Date<br/>".$row->dispo_date."<br/>";

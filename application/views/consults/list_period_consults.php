@@ -43,9 +43,9 @@
       echo "<td>".$last_name.", ".$first_name." ".$middle_name;
       echo " ".$age."/".$sex."</td>";
       echo "<td>".$case_number."</td>";
-      echo "<td><a class=\"\" href=\"".base_url()."encounters/edit_consult_date_in/".$row->id."\">".$row->date_in."</a></td>";
-      echo "<td><a class=\"\" href=\"".base_url()."encounters/edit_consult_time_in/".$row->id."\">".$row->time_in."</a></td>";
-      echo "<td><a class=\"\" href=\"".base_url()."encounters/edit_consult_disposition/".$row->id."/".$row->disposition."\">".$row->disposition."</a></td>";
+      echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_date_in/".$row->id."\">".$row->date_in."</a></td>";
+      echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_time_in/".$row->id."\">".$row->time_in."</a></td>";
+      echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_disposition/".$row->id."/".$row->disposition."\">".$row->disposition."</a></td>";
       echo "<td>".$row->dispo_date."</td>";
       echo "<td>".$row->dispo_time."</td>";
       echo "</tr>";

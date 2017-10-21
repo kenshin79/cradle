@@ -31,6 +31,8 @@ class Emergency_consults_model extends CI_Model
   {
     $this->db->select('id, patient_id, date_in, time_in, disposition');
     $this->db->where('disposition', "Active");
+    $this->db->order_by('date_in', 'ASC');
+    $this->db->order_by('time_in', 'ASC');
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }

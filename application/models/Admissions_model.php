@@ -52,4 +52,10 @@ class Admissions_model extends CI_Model
     $this->db->update('admissions', array('current_location'=>$new_location, 'current_service'=>$new_service));
     return $this->db->affected_rows();
   }
+  public function update_source($id, $source)
+  {
+    $this->db->where('id', $id);
+    $this->db->update('admissions', array('source'=>$source));
+    return $this->db->affected_rows();
+  }
 }

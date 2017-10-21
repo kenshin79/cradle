@@ -14,7 +14,7 @@
   }
   $age = date_diff(date_create($birth_date), date_create(date('Y-m-d')))->y;
  ?>
-  <?php echo form_open('encounters/new_consult/'.$patient_id,'', array('patient_id'=>$patient_id)); ?>
+  <?php echo form_open('consults/new_consult/'.$patient_id,'', array('patient_id'=>$patient_id)); ?>
 
 <div class="row">
 

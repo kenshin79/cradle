@@ -42,40 +42,32 @@
      <td colspan="5">City/Province: <?php echo $city_province;?></td>
    </tr>
  </table>
-  <?php echo form_open('encounters/new_admission/'.$patient_id,'', array('patient_id'=>$patient_id)); ?>
+  <?php echo form_open('admissions/new_admission/'.$patient_id,'', array('patient_id'=>$patient_id)); ?>
 
 <div class="row">
+  <div class="col-1"></div>
 
   <div class="col">
     <label for="date_in">Date</label>
     <?php echo form_input(array('name'=>'date_in', 'id'=>'date_in', 'type'=>'text', 'class'=>'datepicker'));?>
-  </div>
-  <div class="col">
+
     <label for="time_in" >Time</label>
     <?php echo form_input(array('name'=>'time_in', 'id'=>'time_in', 'type'=>'text', 'class'=>'timepicker'));?>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <label for="source" >Source</label>
-    <?php echo form_dropdown('source', $this->config->item('source'), '', array('id'=>'source'));?>
-  </div>  
-  <div class="col">
-    <label for="inital_service" >Service</label>
-    <?php echo form_dropdown('initial_service', $this->config->item('service'), '', array('id'=>'initial_service'));?>
-  </div>
-  <div class="col">
+
     <label for="initial_location" >Location</label>
     <?php echo form_dropdown('initial_location', $this->config->item('location'), '', array('id'=>'initial_location'));?>
   </div>
 </div>
 <div class="row">
-  <div class="col-4">
-  </div>
-  <div class="col-4">
+  <div class="col-1"></div>
+  <div class="col">
+    <label for="source" >Source</label>
+    <?php echo form_dropdown('source', $this->config->item('source'), '', array('id'=>'source'));?>
+
+    <label for="inital_service" >Service</label>
+    <?php echo form_dropdown('initial_service', $this->config->item('service'), '', array('id'=>'initial_service'));?>
+
     <button class="btn btn-primary" type="submit" >Add Admission</button>
-  </div>
-  <div class="col-4">
   </div>
 </div>
 

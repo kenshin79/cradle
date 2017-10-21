@@ -11,7 +11,7 @@ foreach ($current_disposition as $row)
 {
   $dispo_now = $row->disposition;
 }
-echo form_open('encounters/edit_consult_disposition/'.$consult_id);
+echo form_open('consults/edit_consult_disposition/'.$consult_id);
 ?>
 
 <div class="row">
