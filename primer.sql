@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS admissions (
   current_location varchar(100),
   disposition varchar(100),
   dispo_date date NOT NULL,
-  dispo_time time,
+  dispo_time time NOT NULL,
   PRIMARY KEY (id),
   UNIQUE(patient_id, date_in, time_in)
 );

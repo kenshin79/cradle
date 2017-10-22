@@ -143,6 +143,7 @@ class Consults extends CI_Controller {
         $data['page_title'] = "Edit Date of Consult";
         $data['consult_id'] = $consult_id;
         $this->load->view('templates/header', $data);
+        $this->load->view('consults/patient_info_header', $data);
         $this->load->view('consults/edit_consult_date_in', $data);
         $this->load->view('templates/footer');
       }
@@ -179,6 +180,7 @@ class Consults extends CI_Controller {
         $data['page_title'] = "Edit Time of Consult";
         $data['consult_id'] = $consult_id;
         $this->load->view('templates/header', $data);
+        $this->load->view('consults/patient_info_header', $data);
         $this->load->view('consults/edit_consult_time_in', $data);
         $this->load->view('templates/footer');
       }
@@ -194,13 +196,24 @@ class Consults extends CI_Controller {
     }
     else
     {
+      $this->disposition = $this->input->post('disposition', TRUE);
+      $this->dispo_date = $this->input->post('dispo_date', TRUE);
+      $this->dispo_time = $this->input->post('dispo_time', TRUE);
       $this->form_validation->set_rules('disposition', 'Disposition', 'required');
-
+      if(strcmp($this->disposition, "Active")){
+        $this->form_validation->set_rules('dispo_date', 'Date of Disposition', 'required');
+        $this->form_validation->set_rules('dispo_time', 'Time of Disposition', 'required');
+      }
       if($this->form_validation->run()==TRUE)
       {
-        $this->disposition = $this->input->post('disposition', TRUE);
-        $this->dispo_date = $this->input->post('dispo_date', TRUE);
-        $this->dispo_time = $this->input->post('dispo_time', TRUE);
+        if(!strcmp($this->disposition, "Active")){
+          $this->dispo_date = "0000-00-00";
+          $this->dispo_time = "00:00:00";
+        }
+        if(strcmp($this->disposition, "Active") && !strcmp($this->dispo_date, "0000-00-00")){
+          $this->session->set_flashdata('message', "Disposition Date cannot be empty if no longer active.");
+          redirect($this->session->userdata('prev_uri'), 'refresh');
+        }
 
         if($this->emergency_consults_model->edit_disposition($consult_id, $this->disposition, $this->dispo_date, $this->dispo_time))
         {
@@ -215,9 +228,13 @@ class Consults extends CI_Controller {
       }
       else
       {
+        if(validation_errors()){
+          $this->session->set_flashdata('message', validation_errors());
+        }
         $data['page_title'] = "Edit Disposition of Consult";
         $data['consult_id'] = $consult_id;
         $this->load->view('templates/header', $data);
+        $this->load->view('consults/patient_info_header', $data);
         $this->load->view('consults/edit_consult_disposition', $data);
         $this->load->view('templates/footer');
       }

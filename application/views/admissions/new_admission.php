@@ -1,9 +1,10 @@
 <div class="row">
   <div class="col">
-    <h3>New Admission</h3>
+    <h3><?php echo $page_title;?></h3>
   </div>
 </div>
 <?php
+  $this->session->set_userdata('prev_uri', uri_string());
   $patient_info = $this->mpi_model->get_patient($patient_id);
   foreach ($patient_info as $row)
   {
@@ -48,25 +49,11 @@
   <div class="col-1"></div>
 
   <div class="col">
-    <label for="date_in">Date</label>
-    <?php echo form_input(array('name'=>'date_in', 'id'=>'date_in', 'type'=>'text', 'class'=>'datepicker'));?>
-
-    <label for="time_in" >Time</label>
-    <?php echo form_input(array('name'=>'time_in', 'id'=>'time_in', 'type'=>'text', 'class'=>'timepicker'));?>
-
-    <label for="initial_location" >Location</label>
-    <?php echo form_dropdown('initial_location', $this->config->item('location'), '', array('id'=>'initial_location'));?>
-  </div>
-</div>
-<div class="row">
-  <div class="col-1"></div>
-  <div class="col">
-    <label for="source" >Source</label>
-    <?php echo form_dropdown('source', $this->config->item('source'), '', array('id'=>'source'));?>
-
-    <label for="inital_service" >Service</label>
-    <?php echo form_dropdown('initial_service', $this->config->item('service'), '', array('id'=>'initial_service'));?>
-
+    Date: <?php echo form_input(array('name'=>'date_in', 'id'=>'date_in', 'type'=>'text', 'class'=>'datepicker'));?><br/><br/>
+    Time: <?php echo form_input(array('name'=>'time_in', 'id'=>'time_in', 'type'=>'text', 'class'=>'timepicker'));?><br/><br/>
+    Location: <?php echo form_dropdown('initial_location', $this->config->item('location'), '', array('id'=>'initial_location'));?><br/><br/>
+    Source: <?php echo form_dropdown('source', $this->config->item('source'), '', array('id'=>'source'));?><br/><br/>
+    Service: <?php echo form_dropdown('initial_service', $this->config->item('service'), '', array('id'=>'initial_service'));?><br/><br/>
     <button class="btn btn-primary" type="submit" >Add Admission</button>
   </div>
 </div>

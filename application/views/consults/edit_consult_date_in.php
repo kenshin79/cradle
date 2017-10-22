@@ -1,10 +1,4 @@
 <?php
-echo "<div class=\"row\">";
-echo "<div class=\"col-1\"></div>";
-echo "<div class=\"col\">";
-echo "<h3>".$page_title."</h3>";
-echo "</div>";
-echo "</div>";
 $this->load->model('emergency_consults_model');
 $current_date_in = $this->emergency_consults_model->get_date_in($consult_id);
 foreach ($current_date_in as $row)
@@ -21,3 +15,4 @@ echo form_open('consults/edit_consult_date_in/'.$consult_id);
     <button class="btn btn-primary" type="submit">Save</button>
   </div>
 </div>
+<?php form_close();?>

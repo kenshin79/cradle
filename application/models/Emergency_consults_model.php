@@ -27,6 +27,13 @@ class Emergency_consults_model extends CI_Model
     return $this->db->affected_rows();
   }
 
+  public function get_consult($id)
+  {
+    $this->db->select('id, patient_id, date_in, time_in, disposition, dispo_date, dispo_time');
+    $this->db->where('id', $id);
+    $query = $this->db->get('emergency_consults');
+    return $query->result();
+  }
   public function get_active_consults()
   {
     $this->db->select('id, patient_id, date_in, time_in, disposition');

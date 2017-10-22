@@ -18,7 +18,32 @@ class Transfers_model extends CI_Model
   public function get_transfers($admission_id)
   {
     $this->db->where('admission_id', $admission_id);
+    $this->db->order_by('id', 'ASC');
     $query = $this->db->get('transfers');
     return $query->result();
+  }
+  public function get_transfer_info($id)
+  {
+    $this->db->where('id', $id);
+    $query = $this->db->get('transfers');
+    return $query->result();
+  }
+  public function update_transfer($id, $date_transfer, $time_transfer, $target_location, $target_service)
+  {
+    $data = array(
+      'date_transfer'=>$date_transfer,
+      'time_transfer'=>$time_transfer,
+      'target_location'=>$target_location,
+      'target_service'=>$target_service
+    );
+    $this->db->where('id', $id);
+    $this->db->update('transfers', $data);
+    return $this->db->affected_rows();
+  }
+  public function delete_transfer($id)
+  {
+    $this->db->where('id', $id);
+    $this->db->delete('transfers');
+    return $this->db->affected_rows();
   }
 }
