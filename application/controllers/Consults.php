@@ -9,6 +9,7 @@ class Consults extends CI_Controller {
   private $disposition;
   private $dispo_date;
   private $dispo_time;
+  private $ed_type;
 
   public function __construct()
 	{
@@ -34,9 +35,10 @@ class Consults extends CI_Controller {
         $this->date_in = $this->input->post('date_in', TRUE);
         $this->time_in = $this->input->post('time_in', TRUE);
         $this->patient_id = $this->input->post('patient_id', TRUE);
+        $this->ed_type = $this->input->post('ed_type', TRUE);
         $this->disposition = "Active";
 
-        if($this->emergency_consults_model->insert_new_consult($this->patient_id, $this->date_in, $this->time_in, $this->disposition)){
+        if($this->emergency_consults_model->insert_new_consult($this->patient_id, $this->ed_type, $this->date_in, $this->time_in, $this->disposition)){
           $this->session->set_flashdata('message', "Success adding new Emergency Consult to database.");
           redirect('welcome', 'refresh');
         }
@@ -109,6 +111,41 @@ class Consults extends CI_Controller {
           $this->load->view('templates/header', $data);
           $this->load->view('consults/period_consults_header', $data);
           $this->load->view('templates/select_period_dates');
+          $this->load->view('templates/footer');
+        }
+      }
+  }
+  public function edit_ed_type($consult_id)
+  {
+    if (!$this->ion_auth->logged_in())
+    {
+      // redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    else
+    {
+      $this->form_validation->set_rules('ed_type', 'Type of Consult', 'required');
+      if($this->form_validation->run()==TRUE)
+      {
+          $this->ed_type = $this->input->post('ed_type', TRUE);
+          if($this->emergency_consults_model->edit_ed_type($consult_id, $this->ed_type))
+          {
+            $this->session->set_flashdata('message', "Successfully updated Type of Emergency Consult.");
+            redirect($this->session->userdata('prev_uri'));
+          }
+          else
+          {
+            $this->session->set_flashdata('message', "Error updating Type of Emergency Consult/No change.");
+            redirect($this->session->userdata('prev_uri'));
+          }
+        }
+        else
+        {
+          $data['page_title'] = "Edit Type of Consult";
+          $data['consult_id'] = $consult_id;
+          $this->load->view('templates/header', $data);
+          $this->load->view('consults/patient_info_header', $data);
+          $this->load->view('consults/edit_ed_type', $data);
           $this->load->view('templates/footer');
         }
       }

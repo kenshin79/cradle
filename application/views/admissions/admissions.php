@@ -35,10 +35,31 @@
         echo " ".$age."/".$sex."<br />";
         echo "Case no: ".$case_number."<br />";
         echo "Source: <a href=\"".base_url()."admissions/edit_source/".$row->id."\">".$row->source."</a><br/>";
+        echo "PHIC: <a href=\"".base_url()."admissions/edit_phic/".$row->id."/".$row->phic."\">";
+        if($row->phic)
+        {
+            echo "YES";
+        }
+        else
+        {
+            echo "NO";
+
+        }
+        echo "</a><br/>";
         echo "Current Location: ".$row->current_location."<br/>";
         echo "Current Service: ".$row->current_service."<br/>";
-        echo "Initial Location: <a href=\"".base_url()."admissions/edit_initial_location/".$row->id."\">".$row->initial_location."</a><br/>";
-        echo "Initial Service: <a href=\"".base_url()."admissions/edit_initial_service/".$row->id."\">".$row->initial_service."</a><br/>";
+        if($this->transfers_model->with_transfer($row->id)){
+          echo "Initial Location: ".$row->initial_location."<br/>";
+        }
+        else{
+          echo "Initial Location: <a href=\"".base_url()."admissions/edit_initial_location/".$row->id."\">".$row->initial_location."</a><br/>";
+        }
+        if($this->transfers_model->with_transfer($row->id)){
+          echo "Initial Service: ".$row->initial_service."<br/>";
+        }
+        else{
+          echo "Initial Service: <a href=\"".base_url()."admissions/edit_initial_service/".$row->id."\">".$row->initial_service."</a><br/>";
+        }
         echo "</td>";
         echo "<td>Date<br/><a href=\"".base_url()."admissions/edit_date_in/".$row->id."\">".$row->date_in."</a><br />";
         echo "Time<br/><a href=\"".base_url()."admissions/edit_time_in/".$row->id."\">".$row->time_in."</a><br/>";

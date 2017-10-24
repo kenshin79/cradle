@@ -46,4 +46,12 @@ class Transfers_model extends CI_Model
     $this->db->delete('transfers');
     return $this->db->affected_rows();
   }
+
+    public function with_transfer($admission_id)
+    {
+      $this->db->where('admission_id', $admission_id);
+      $query = $this->db->get('transfers');
+      return $query->num_rows();
+    }
+
 }

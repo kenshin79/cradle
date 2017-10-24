@@ -163,6 +163,7 @@ class Transfers extends CI_Controller {
       $this->session->set_flashdata('message', "Error deleting Transfer.");
       redirect($this->session->userdata('prev_uri'), 'refresh');
     }
-    
+
   }
+
 }

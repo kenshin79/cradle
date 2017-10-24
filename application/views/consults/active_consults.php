@@ -4,7 +4,7 @@
     <tr>
       <th>No.</th>
       <th>Patient</th>
-      <th>Case Number</th>
+      <th>Type</th>
       <th>Date of Consult</th>
       <th>Time of Consult</th>
       <th>Days</th>
@@ -34,8 +34,9 @@
         echo "<tr>";
         echo "<td>".$count."</td>";
         echo "<td>".$last_name.", ".$first_name." ".$middle_name;
-        echo " ".$age."/".$sex."</td>";
-        echo "<td>".$case_number."</td>";
+        echo " ".$age."/".$sex."<br/>";
+        echo "Case number: ".$case_number."</td>";
+        echo "<td><a href=\"".base_url()."consults/edit_ed_type/".$row->id."\">".$row->ed_type."</a></td>";
         echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_date_in/".$row->id."\">".$row->date_in."</a></td>";
         echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_time_in/".$row->id."\">".$row->time_in."</a></td>";
         echo "<td>".$days."</td>";

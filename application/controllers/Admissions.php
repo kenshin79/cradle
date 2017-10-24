@@ -10,6 +10,7 @@ class Admissions extends CI_Controller {
   private $dispo_date;
   private $dispo_time;
   private $source;
+  private $phic;
   private $initial_service;
   private $current_service;
   private $inital_location;
@@ -44,8 +45,13 @@ class Admissions extends CI_Controller {
         $this->initial_service = $this->input->post('initial_service', TRUE);
         $this->current_service = $this->input->post('initial_service', TRUE);
         $this->source = $this->input->post('source', TRUE);
+        $this->phic = $this->input->post('phic', TRUE);
+        if(!$this->phic)
+        {
+          $this->phic = 0;
+        }
 
-        if($this->admissions_model->insert_new_admission($this->patient_id, $this->date_in, $this->time_in, $this->source, $this->initial_service, $this->current_service, $this->initial_location, $this->current_location)){
+        if($this->admissions_model->insert_new_admission($this->patient_id, $this->date_in, $this->time_in, $this->source, $this->phic, $this->initial_service, $this->current_service, $this->initial_location, $this->current_location)){
           $this->session->set_flashdata('message', "Success adding new Admission to database.");
           redirect($this->session->userdata('prev_uri'), 'refresh');
         }
@@ -120,7 +126,19 @@ class Admissions extends CI_Controller {
       }
     }
   }
-
+  public function edit_phic($admission_id, $phic)
+  {
+    if (!$this->ion_auth->logged_in())
+    {
+      // redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    else
+    {
+      $this->admissions_model->update_phic($admission_id, $phic);
+      redirect($this->session->userdata('prev_uri'), 'refresh');
+    }
+  }
   public function edit_date_in($admission_id)
   {
     if (!$this->ion_auth->logged_in())
@@ -203,6 +221,9 @@ class Admissions extends CI_Controller {
       if($this->form_validation->run()==TRUE){
         $initial_location = $this->input->post('initial_location', TRUE);
         if($this->admissions_model->update_initial_location($admission_id, $initial_location)){
+          if(!$this->transfers_model->with_transfer($admission_id)){
+            $this->admissions_model->update_current_location($admission_id, $initial_location);
+          }
           $this->session->set_flashdata('message', "Success updating Initial Location of Admission.");
           redirect($this->session->userdata('prev_uri'), 'refresh');
         }
@@ -237,6 +258,9 @@ class Admissions extends CI_Controller {
       if($this->form_validation->run()==TRUE){
         $initial_service = $this->input->post('initial_service', TRUE);
         if($this->admissions_model->update_initial_service($admission_id, $initial_service)){
+          if(!$this->transfers_model->with_transfer($admission_id)){
+            $this->admissions_model->update_current_service($admission_id, $initial_service);
+          }
           $this->session->set_flashdata('message', "Success updating Initial Service of Admission.");
           redirect($this->session->userdata('prev_uri'), 'refresh');
         }

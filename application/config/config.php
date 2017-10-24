@@ -527,7 +527,7 @@ $config['proxy_ips'] = '';
 /-MPI field names
 /
 */
-$config['mpi_table'] = "patients";
+$config['mpi_table'] = "patients_info";
 $config['id'] = "p_id";
 $config['sex'] = "sex";
 $config['case_number'] = "casenumber";
@@ -550,11 +550,22 @@ $config['ed_disposition'] = array(
 );
 
 /*
+/-ED Consult Type
+*/
+$config['ed_type'] = array(
+  'Adult'=>'Adult',
+  'Pediatric'=>'Pediatric',
+  'Obstetric'=>'Obstetric'
+
+);
+
+/*
 /-Source admissions
 */
 $config['source'] = array(
     'Emergency'=>'Emergency',
     'Elective'=>'Elective',
+    'OBAS'=>'OBAS',
     'Hospital Transfer'=>'Hospital Transfer',
     'DPPS'=>'DPPS'
 
@@ -584,6 +595,8 @@ $config['service'] = array(
 /-location
 */
 $config['location'] = array(
+    'Emergency'=>'Emergency',
+    'OBAS'=>'OBAS',
     'Ward 1'=>'Ward 1',
     'Ward 2'=>'Ward 2',
     'Ward 3'=>'Ward 3',

@@ -14,11 +14,11 @@ echo form_open('consults/edit_consult_disposition/'.$consult_id);
   <div class="col-1"></div>
   <div class="col">
     Disposition:
-    <?php echo form_dropdown('disposition', $this->config->item('ed_disposition'), $dispo_now);?><br/>
+    <?php echo form_dropdown('disposition', $this->config->item('ed_disposition'), $dispo_now);?><br/><br/>
     Date of Disposition:
-    <?php echo form_input('dispo_date', $dispo_date, array('class'=>'datepicker', 'id'=>'dispo_date'));?><br/>
+    <?php echo form_input('dispo_date', $dispo_date, array('class'=>'datepicker', 'id'=>'dispo_date'));?><br/><br/>
     Time of Disposition:
-    <?php echo form_input('dispo_time', $dispo_time, array('class'=>'timepicker', 'id'=>'dispo_time'));?><br/>
+    <?php echo form_input('dispo_time', $dispo_time, array('class'=>'timepicker', 'id'=>'dispo_time'));?><br/><br/>
     <button class="btn btn-primary" type="submit">Save</button>
   </div>
 </div>

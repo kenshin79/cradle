@@ -9,13 +9,14 @@ class Admissions_model extends CI_Model
     return $this->db->count_all_results();
   }
 
-  public function insert_new_admission($patient_id, $date_in, $time_in, $source, $initial_service, $current_service, $initial_location, $current_location)
+  public function insert_new_admission($patient_id, $date_in, $time_in, $source, $phic, $initial_service, $current_service, $initial_location, $current_location)
   {
     $data = array(
       'patient_id'=>$patient_id,
       'date_in'=>$date_in,
       'time_in'=>$time_in,
       'source'=>$source,
+      'phic'=>$phic,
       'initial_service'=>$initial_service,
       'current_service'=>$current_service,
       'initial_location'=>$initial_location,
@@ -32,7 +33,7 @@ class Admissions_model extends CI_Model
     return $this->db->affected_rows();
   }
   public function get_admissions(){
-    $this->db->select('id, patient_id, date_in, time_in, source, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
+    $this->db->select('id, patient_id, date_in, time_in, source, phic, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
     $this->db->order_by('current_location', 'ASC');
     $this->db->order_by('disposition', 'ASC');
     $this->db->order_by('date_in', 'DESC');
@@ -41,7 +42,7 @@ class Admissions_model extends CI_Model
   }
   public function get_admission_info($id)
   {
-    $this->db->select('id, patient_id, date_in, time_in, source, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
+    $this->db->select('id, patient_id, date_in, time_in, source, phic, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
     $this->db->where('id', $id);
     $query = $this->db->get('admissions');
     return $query->result();
@@ -56,6 +57,20 @@ class Admissions_model extends CI_Model
   {
     $this->db->where('id', $id);
     $this->db->update('admissions', array('source'=>$source));
+    return $this->db->affected_rows();
+  }
+  public function update_phic($id, $phic)
+  {
+    if($phic)
+    {
+      $phic = 0;
+    }
+    else
+    {
+      $phic = 1;
+    }
+    $this->db->where('id', $id);
+    $this->db->update('admissions', array('phic'=>$phic));
     return $this->db->affected_rows();
   }
   public function update_date_in($id, $date_in)
@@ -76,10 +91,22 @@ class Admissions_model extends CI_Model
     $this->db->update('admissions', array('initial_location'=>$initial_location));
     return $this->db->affected_rows();
   }
+  public function update_current_location($id, $current_location)
+  {
+    $this->db->where('id', $id);
+    $this->db->update('admissions', array('current_location'=>$current_location));
+    return $this->db->affected_rows();
+  }
   public function update_initial_service($id, $initial_service)
   {
     $this->db->where('id', $id);
     $this->db->update('admissions', array('initial_service'=>$initial_service));
+    return $this->db->affected_rows();
+  }
+  public function update_current_service($id, $current_service)
+  {
+    $this->db->where('id', $id);
+    $this->db->update('admissions', array('current_service'=>$current_service));
     return $this->db->affected_rows();
   }
   public function update_disposition($id, $disposition, $dispo_date, $dispo_time)

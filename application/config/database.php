@@ -76,8 +76,8 @@ $query_builder = TRUE;
 $db['cradle'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
+	'username' => 'root',
+	'password' => 'theidiot',
 	'database' => 'cradle',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
@@ -95,12 +95,12 @@ $db['cradle'] = array(
 	'save_queries' => TRUE
 );
 
-$db[''] = array(
+$db['mpi'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
+	'username' => 'root',
+	'password' => 'theidiot',
+	'database' => 'mpi',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

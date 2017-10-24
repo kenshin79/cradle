@@ -9,10 +9,11 @@ class Emergency_consults_model extends CI_Model
     return $this->db->count_all_results();
   }
 
-  public function insert_new_consult($patient_id, $date_in, $time_in, $disposition)
+  public function insert_new_consult($patient_id, $ed_type, $date_in, $time_in, $disposition)
   {
     $data = array(
       'patient_id'=>$patient_id,
+      'ed_type'=>$ed_type,
       'date_in'=>$date_in,
       'time_in'=>$time_in,
       'disposition'=>$disposition
@@ -29,14 +30,14 @@ class Emergency_consults_model extends CI_Model
 
   public function get_consult($id)
   {
-    $this->db->select('id, patient_id, date_in, time_in, disposition, dispo_date, dispo_time');
+    $this->db->select('id, patient_id, ed_type, date_in, time_in, disposition, dispo_date, dispo_time');
     $this->db->where('id', $id);
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }
   public function get_active_consults()
   {
-    $this->db->select('id, patient_id, date_in, time_in, disposition');
+    $this->db->select('id, patient_id, date_in, ed_type, time_in, disposition');
     $this->db->where('disposition', "Active");
     $this->db->order_by('date_in', 'ASC');
     $this->db->order_by('time_in', 'ASC');
@@ -45,9 +46,16 @@ class Emergency_consults_model extends CI_Model
   }
 
   public function get_period_consults($date_start, $date_end){
-    $this->db->select('id, patient_id, date_in, time_in, dispo_date, dispo_time, disposition');
+    $this->db->select('id, patient_id, ed_type, date_in, time_in, dispo_date, dispo_time, disposition');
     $this->db->where('date_in >=', $date_start);
     $this->db->where('date_in<=', $date_end);
+    $query = $this->db->get('emergency_consults');
+    return $query->result();
+  }
+  public function get_ed_type($id)
+  {
+    $this->db->select('ed_type');
+    $this->db->where('id', $id);
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }
@@ -72,6 +80,12 @@ class Emergency_consults_model extends CI_Model
     $this->db->where('id', $id);
     $query = $this->db->get('emergency_consults');
     return $query->result();
+  }
+  public function edit_ed_type($id, $ed_type)
+  {
+    $this->db->where('id', $id);
+    $this->db->update('emergency_consults', array('ed_type'=>$ed_type));
+    return $this->db->affected_rows();
   }
   public function edit_date_in($id, $date_in)
   {

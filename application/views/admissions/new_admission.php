@@ -54,6 +54,7 @@
     Location: <?php echo form_dropdown('initial_location', $this->config->item('location'), '', array('id'=>'initial_location'));?><br/><br/>
     Source: <?php echo form_dropdown('source', $this->config->item('source'), '', array('id'=>'source'));?><br/><br/>
     Service: <?php echo form_dropdown('initial_service', $this->config->item('service'), '', array('id'=>'initial_service'));?><br/><br/>
+    Philhealth? <?php echo form_checkbox('phic', 1, FALSE);?><br/><br/>
     <button class="btn btn-primary" type="submit" >Add Admission</button>
   </div>
 </div>
