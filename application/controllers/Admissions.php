@@ -53,7 +53,7 @@ class Admissions extends CI_Controller {
 
         if($this->admissions_model->insert_new_admission($this->patient_id, $this->date_in, $this->time_in, $this->source, $this->phic, $this->initial_service, $this->current_service, $this->initial_location, $this->current_location)){
           $this->session->set_flashdata('message', "Success adding new Admission to database.");
-          redirect($this->session->userdata('prev_uri'), 'refresh');
+          redirect('reports', 'refresh');
         }
         else
         {
@@ -75,7 +75,149 @@ class Admissions extends CI_Controller {
       }
     }
   }
-
+  public function location_code($key)
+  {
+    switch ($key) {
+      case '1':
+        $x = "Emergency";
+        break;
+      case '2':
+        $x = "OBAS";
+        break;
+      case '3':
+        $x = "PAS";
+        break;
+      case '4':
+        $x = "Ward 1";
+        break;
+      case '5':
+        $x = "Ward 2";
+        break;
+      case '6':
+        $x = "Ward 3";
+        break;
+      case '7':
+        $x = "Ward 4";
+        break;
+      case '8':
+        $x = "Ward 5 (Neuro)";
+        break;
+      case '9':
+        $x = "Ward 5 (Rehab)";
+        break;
+      case '10':
+        $x = "Ward 6";
+        break;
+      case '11':
+        $x = "Ward 7";
+        break;
+      case '12':
+        $x = "Ward 8";
+        break;
+      case '13':
+        $x = "Ward 9";
+        break;
+      case '14':
+        $x = "Ward 10";
+        break;
+      case '15':
+        $x = "Ward 11";
+        break;
+      case '16':
+        $x = "PHIC Ward";
+        break;
+      case '17':
+        $x = "Ward 14A";
+        break;
+      case '18':
+        $x = "Ward 14B";
+        break;
+      case '19':
+        $x = "Ward 15";
+        break;
+      case '20':
+        $x = "Ward 16";
+        break;
+      case '21':
+        $x = "CI";
+        break;
+      case '22':
+        $x = "SOJR";
+        break;
+      case '23':
+        $x = "Hema-Onco";
+        break;
+      case '24':
+        $x = "MICU";
+        break;
+      case '25':
+        $x = "CENICU";
+        break;
+      case '26':
+        $x = "SICU";
+        break;
+      case '27':
+        $x = "Neuro ICU";
+        break;
+      case '28':
+        $x = "NSSCU";
+        break;
+      case '29':
+        $x = "Neonatal ICU";
+        break;
+      case '30':
+        $x = "PICU";
+        break;
+      case '31':
+        $x = "Burn Unit";
+        break;
+      case '32':
+        $x = "IMU";
+        break;
+      default:
+        $x = 1;
+        break;
+    }
+    return $x;
+  }
+  public function show_active_admissions($key)
+  {
+    if (!$this->ion_auth->logged_in())
+    {
+      // redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    else
+    {
+      $y = $this->location_code($key);
+      $data['admissions'] = $this->admissions_model->get_active_admissions($y);
+      $data['page_title'] = "Active Admissions: ".$y;
+      $data['key'] = $key;
+      $data['census'] = "a";
+      $this->load->view('templates/header', $data);
+      $this->load->view('admissions/admissions', $data);
+      $this->load->view('templates/footer');
+    }
+  }
+  public function show_inactive_admissions($key)
+  {
+    if (!$this->ion_auth->logged_in())
+    {
+      // redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    else
+    {
+      $y = $this->location_code($key);
+      $data['admissions'] = $this->admissions_model->get_inactive_admissions($y);
+      $data['page_title'] = "Discharges: ".$y;
+      $data['key'] = $key;
+      $data['census'] = "i";
+      $this->load->view('templates/header', $data);
+      $this->load->view('admissions/admissions', $data);
+      $this->load->view('templates/footer');
+    }
+  }
   public function show_admissions()
   {
     if (!$this->ion_auth->logged_in())

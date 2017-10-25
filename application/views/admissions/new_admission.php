@@ -4,7 +4,6 @@
   </div>
 </div>
 <?php
-  $this->session->set_userdata('prev_uri', uri_string());
   $patient_info = $this->mpi_model->get_patient($patient_id);
   foreach ($patient_info as $row)
   {

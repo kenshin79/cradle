@@ -1,5 +1,4 @@
 <?php
-  $this->session->set_userdata('prev_uri', uri_string());
   $consults = $this->emergency_consults_model->get_consult($consult_id);
   foreach ($consults as $row) {
     $patient_id = $row->patient_id;

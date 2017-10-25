@@ -40,12 +40,12 @@ class Consults extends CI_Controller {
 
         if($this->emergency_consults_model->insert_new_consult($this->patient_id, $this->ed_type, $this->date_in, $this->time_in, $this->disposition)){
           $this->session->set_flashdata('message', "Success adding new Emergency Consult to database.");
-          redirect('welcome', 'refresh');
+          redirect('reports', 'refresh');
         }
         else
         {
           $this->session->set_flashdata('message', "Error adding New Emergency Consult to database.");
-          redirect('welcome', 'refresh');
+          redirect($this->session->userdata('prev_uri'), 'refresh');
         }
 
       }
@@ -63,7 +63,7 @@ class Consults extends CI_Controller {
 
 
 
-  public function show_active_consults()
+  public function show_active_consults($type)
   {
     if (!$this->ion_auth->logged_in())
     {
@@ -72,14 +72,67 @@ class Consults extends CI_Controller {
     }
     else
     {
-      $data['active_consults'] = $this->emergency_consults_model->get_active_consults();
-      $data['page_title'] = "Active Emergency Consults";
+      $data['active_consults'] = $this->emergency_consults_model->get_active_consults($type);
+      switch ($type) {
+        case '0':
+          $x = "";
+          break;
+        case '1':
+          $x = "Adult";
+          break;
+        case '2':
+          $x = "Pediatric";
+          break;
+        case '3':
+          $x = "Obstetric";
+          break;
+        default:
+          $x = "";
+          break;
+      }
+      $data['page_title'] = "Active ".$x." Emergency Consults";
+      $data['census'] = "a";
+      $data['key'] = $type;
       $this->load->view('templates/header', $data);
       $this->load->view('consults/active_consults', $data);
       $this->load->view('templates/footer');
     }
   }
-
+  public function show_inactive_consults($type)
+  {
+    if (!$this->ion_auth->logged_in())
+    {
+      // redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    else
+    {
+      $data['active_consults'] = $this->emergency_consults_model->get_inactive_consults($type);
+      switch ($type) {
+        case '0':
+          $x = "";
+          break;
+        case '1':
+          $x = "Adult";
+          break;
+        case '2':
+          $x = "Pediatric";
+          break;
+        case '3':
+          $x = "Obstetric";
+          break;
+        default:
+          $x = "";
+          break;
+      }
+      $data['page_title'] = "Active ".$x." Emergency Consults";
+      $data['census'] = "i";
+      $data['key'] = $type;
+      $this->load->view('templates/header', $data);
+      $this->load->view('consults/active_consults', $data);
+      $this->load->view('templates/footer');
+    }
+  }
   public function show_period_consults()
   {
     if (!$this->ion_auth->logged_in())

@@ -1,5 +1,4 @@
 <?php
-  $this->session->set_userdata('prev_uri', uri_string());
   $admission_info = $this->admissions_model->get_admission_info($admission_id);
   foreach ($admission_info as $row) {
     $patient_id = $row->patient_id;
@@ -43,7 +42,7 @@
                 echo "Time of Admission: ".$time_in."<br/>";
                 echo "No. of Days Admitted: ".$days."<br/>";
                 echo "Current Location: ".$current_location."<br/>";
-                echo "Current Service: ".$current_service."<br/>";                
+                echo "Current Service: ".$current_service."<br/>";
                 echo "Initial Location: ".$initial_location."<br/>";
                 echo "Initial Service: ".$initial_service."<br/>";
           ?>

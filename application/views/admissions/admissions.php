@@ -1,4 +1,21 @@
-<h3>Admissions</h3>
+<div class="row">
+  <div class="col-1"></div>
+    <div class="col">
+      <h3><?php echo $page_title;?>  <a class="btn btn-info" href="
+        <?php
+          if(!strcmp($census, "a"))
+          {
+            echo base_url()."admissions/show_inactive_admissions/".$key."\">Show Discharges</a></h3>";
+          }
+          else
+          {
+            echo base_url()."admissions/show_active_admissions/".$key."\">Show Active Admissions</a></h3>";
+          }?>
+
+    </div>
+  <div class="col-1"></div>
+</div>
+
 <table class="table datatable">
   <thead>
     <tr>
@@ -27,7 +44,13 @@
           $city_province = $pow->{$this->config->item('city_province')};
         }
         $age = date_diff(date_create($birth_date), date_create(date('Y-m-d')))->y;
-        $days = date_diff(date_create(date('Y-m-d H:i:s')), date_create($row->date_in." ".$row->time_in))->d;
+        if(!strcmp($row->disposition, "Admitted"))
+        {
+            $days = date_diff(date_create(date('Y-m-d H:i:s')), date_create($row->date_in." ".$row->time_in))->d;
+        }
+        else{
+            $days = date_diff(date_create($row->dispo_date." ".$row->dispo_time), date_create($row->date_in." ".$row->time_in))->d;
+        }
         $transfers = $this->transfers_model->get_transfers($row->id);
         echo "<tr>";
         echo "<td>".$count."</td>";

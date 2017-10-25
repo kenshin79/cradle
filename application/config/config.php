@@ -597,6 +597,7 @@ $config['service'] = array(
 $config['location'] = array(
     'Emergency'=>'Emergency',
     'OBAS'=>'OBAS',
+    'PAS'=>'PAS',
     'Ward 1'=>'Ward 1',
     'Ward 2'=>'Ward 2',
     'Ward 3'=>'Ward 3',
@@ -625,7 +626,8 @@ $config['location'] = array(
     'Neonatal ICU'=>'Neonatal ICU',
     'PICU'=>'PICU',
     'Neonatal ICU'=>'Neonatal ICU',
-    'Burn Unit',
+    'Burn Unit'=>'Burn Unit',
+    'IMU'=>'IMU'
 
 
 );

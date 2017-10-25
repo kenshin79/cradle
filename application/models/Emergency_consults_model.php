@@ -35,16 +35,58 @@ class Emergency_consults_model extends CI_Model
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }
-  public function get_active_consults()
+  public function get_active_consults($type)
   {
-    $this->db->select('id, patient_id, date_in, ed_type, time_in, disposition');
+    switch ($type) {
+      case '1':
+        $x = "Adult";
+        break;
+      case '2':
+        $x = "Pediatric";
+        break;
+      case '3':
+        $x = "Obstetric";
+        break;
+      default:
+        $x = "Adult";
+        break;
+    }
+    $this->db->select('id, patient_id, date_in, ed_type, time_in, disposition, dispo_date, dispo_time');
+    if($type != 0){
+      $this->db->where('ed_type', $x);
+    }
     $this->db->where('disposition', "Active");
     $this->db->order_by('date_in', 'ASC');
     $this->db->order_by('time_in', 'ASC');
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }
-
+  public function get_inactive_consults($type)
+  {
+    switch ($type) {
+      case '1':
+        $x = "Adult";
+        break;
+      case '2':
+        $x = "Pediatric";
+        break;
+      case '3':
+        $x = "Obstetric";
+        break;
+      default:
+        $x = "Adult";
+        break;
+    }
+    $this->db->select('id, patient_id, date_in, ed_type, time_in, disposition, dispo_date, dispo_time');
+    if($type != 0){
+      $this->db->where('ed_type', $x);
+    }
+    $this->db->where('disposition<>', "Active");
+    $this->db->order_by('date_in', 'DESC');
+    $this->db->order_by('time_in', 'DESC');
+    $query = $this->db->get('emergency_consults');
+    return $query->result();
+  }
   public function get_period_consults($date_start, $date_end){
     $this->db->select('id, patient_id, ed_type, date_in, time_in, dispo_date, dispo_time, disposition');
     $this->db->where('date_in >=', $date_start);

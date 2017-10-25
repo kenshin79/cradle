@@ -13,6 +13,7 @@
     $city_province = $row->{$this->config->item('city_province')};
   }
   $age = date_diff(date_create($birth_date), date_create(date('Y-m-d')))->y;
+
  ?>
 <div class="row">
   <div class="col-1"></div>

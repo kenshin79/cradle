@@ -32,6 +32,26 @@ class Admissions_model extends CI_Model
     }
     return $this->db->affected_rows();
   }
+  public function get_active_admissions($location)
+  {
+    $this->db->select('id, patient_id, date_in, time_in, source, phic, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
+    $this->db->where('current_location', $location);
+    $this->db->where('disposition', "Admitted");
+    $this->db->order_by('date_in', 'ASC');
+    $this->db->order_by('time_in', 'ASC');
+    $query = $this->db->get('admissions');
+    return $query->result();
+  }
+  public function get_inactive_admissions($location)
+  {
+    $this->db->select('id, patient_id, date_in, time_in, source, phic, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
+    $this->db->where('current_location', $location);
+    $this->db->where('disposition<>', "Admitted");
+    $this->db->order_by('date_in', 'DESC');
+    $this->db->order_by('time_in', 'DESC');
+    $query = $this->db->get('admissions');
+    return $query->result();
+  }  
   public function get_admissions(){
     $this->db->select('id, patient_id, date_in, time_in, source, phic, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
     $this->db->order_by('current_location', 'ASC');

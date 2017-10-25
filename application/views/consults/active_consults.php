@@ -1,4 +1,13 @@
-<h3>Active Emergency Consults</h3>
+<h3><?php echo $page_title;?>  <a class="btn btn-info" href="
+  <?php
+    if(!strcmp($census, "a"))
+    {
+      echo base_url()."consults/show_inactive_consults/".$key."\">Show Inactive Consults</a></h3>";
+    }
+    else
+    {
+      echo base_url()."consults/show_active_consults/".$key."\">Show Active Consults</a></h3>";
+    }?>
 <table class="table datatable">
   <thead>
     <tr>
@@ -30,7 +39,14 @@
           $city_province = $pow->{$this->config->item('city_province')};
         }
         $age = date_diff(date_create($birth_date), date_create(date('Y-m-d')))->y;
-        $days = date_diff(date_create(date('Y-m-d H:i:s')), date_create($row->date_in." ".$row->time_in))->d;
+        if(!strcmp($row->disposition, "Active")){
+            $days = date_diff(date_create(date('Y-m-d H:i:s')), date_create($row->date_in." ".$row->time_in))->d;
+        }
+        else
+        {
+            $days = date_diff(date_create($row->dispo_date." ".$row->dispo_time), date_create($row->date_in." ".$row->time_in))->d;
+        }
+
         echo "<tr>";
         echo "<td>".$count."</td>";
         echo "<td>".$last_name.", ".$first_name." ".$middle_name;
@@ -40,7 +56,9 @@
         echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_date_in/".$row->id."\">".$row->date_in."</a></td>";
         echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_time_in/".$row->id."\">".$row->time_in."</a></td>";
         echo "<td>".$days."</td>";
-        echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_disposition/".$row->id."/".$row->disposition."\">".$row->disposition."</a></td>";
+        echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_disposition/".$row->id."/".$row->disposition."\">".$row->disposition."</a><br/>";
+        echo "Date: ".$row->dispo_date."<br/>";
+        echo "Time: ".$row->dispo_time."<br/></td>";
         echo "</tr>";
         $count++;
       }

@@ -55,5 +55,8 @@
     echo "  </tbody>";
     echo "</table>";
   }
-
+  else
+  {
+    echo "<h4>No matches for this search.</h4>";
+  }
  ?>

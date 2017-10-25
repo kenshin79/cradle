@@ -49,7 +49,7 @@ class Transfers extends CI_Controller {
         if(strcmp($target_location, $current_location)==0 && strcmp($target_service, $current_service)==0)
         {
             $this->session->set_flashdata('message', "No transfer occurred, both location and service unchanged.");
-            redirect('transfers/add_transfer/'.$admission_id, 'refresh');
+            redirect($this->session->userdata('prev_uri'), 'refresh');
 
         }
         else{
@@ -57,7 +57,7 @@ class Transfers extends CI_Controller {
             $success_admission = $this->admissions_model->update_admission_transfer($admission_id, $target_location, $target_service);
             if($success_transfer && $success_admission){
               $this->session->set_flashdata('message', "Success recording transfer.");
-              redirect('transfers/add_transfer/'.$admission_id, 'refresh');
+              redirect($this->session->userdata('prev_uri'), 'refresh');
             }
         }
       }
