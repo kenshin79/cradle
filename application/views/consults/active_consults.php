@@ -1,13 +1,4 @@
-<h3><?php echo $page_title;?>  <a class="btn btn-info" href="
-  <?php
-    if(!strcmp($census, "a"))
-    {
-      echo base_url()."consults/show_inactive_consults/".$key."\">Show Inactive Consults</a></h3>";
-    }
-    else
-    {
-      echo base_url()."consults/show_active_consults/".$key."\">Show Active Consults</a></h3>";
-    }?>
+<h3><?php echo $page_title;?></h3>
 <table class="table datatable">
   <thead>
     <tr>

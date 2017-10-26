@@ -160,11 +160,13 @@ class Consults extends CI_Controller {
           {
             $this->session->set_flashdata('message', validation_errors());
           }
+
           $data['page_title'] = "Select Consult Period Dates";
           $this->load->view('templates/header', $data);
           $this->load->view('consults/period_consults_header', $data);
           $this->load->view('templates/select_period_dates');
           $this->load->view('templates/footer');
+
         }
       }
   }
@@ -339,7 +341,7 @@ class Consults extends CI_Controller {
     }
     else
     {
-      $data['page_title'] = "Select Consult Period Dates";
+      $data['page_title'] = "Select Consults Period Dates";
       $this->load->view('templates/header', $data);
       $this->load->view('consults/period_consults_header', $data);
       $this->load->view('templates/select_period_dates');

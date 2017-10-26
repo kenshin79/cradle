@@ -1,17 +1,7 @@
 <div class="row">
   <div class="col-1"></div>
     <div class="col">
-      <h3><?php echo $page_title;?>  <a class="btn btn-info" href="
-        <?php
-          if(!strcmp($census, "a"))
-          {
-            echo base_url()."admissions/show_inactive_admissions/".$key."\">Show Discharges</a></h3>";
-          }
-          else
-          {
-            echo base_url()."admissions/show_active_admissions/".$key."\">Show Active Admissions</a></h3>";
-          }?>
-
+      <h3><?php echo $page_title;?></h3>
     </div>
   <div class="col-1"></div>
 </div>

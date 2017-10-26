@@ -61,6 +61,7 @@ class Emergency_consults_model extends CI_Model
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }
+
   public function get_inactive_consults($type)
   {
     switch ($type) {
@@ -87,10 +88,27 @@ class Emergency_consults_model extends CI_Model
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }
+  public function count_active_consults($type)
+  {
+    $this->db->where('ed_type', $type);
+    $this->db->where('disposition', "Active");
+    $this->db->from('emergency_consults');
+    return $this->db->count_all_results();
+  }
+
+  public function count_all_active_consults()
+  {
+    $this->db->where('disposition', "Active");
+    $this->db->from('emergency_consults');
+    return $this->db->count_all_results();
+  }
+
   public function get_period_consults($date_start, $date_end){
     $this->db->select('id, patient_id, ed_type, date_in, time_in, dispo_date, dispo_time, disposition');
     $this->db->where('date_in >=', $date_start);
     $this->db->where('date_in<=', $date_end);
+    $this->db->order_by('date_in', 'DESC');
+    $this->db->order_by('time_in', 'DESC');
     $query = $this->db->get('emergency_consults');
     return $query->result();
   }

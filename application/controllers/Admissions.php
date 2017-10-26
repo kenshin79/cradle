@@ -180,6 +180,7 @@ class Admissions extends CI_Controller {
     }
     return $x;
   }
+
   public function show_active_admissions($key)
   {
     if (!$this->ion_auth->logged_in())
@@ -472,5 +473,59 @@ class Admissions extends CI_Controller {
         $this->load->view('templates/footer');
       }
     }
+  }
+  public function select_period_admissions()
+  {
+    if (!$this->ion_auth->logged_in())
+    {
+      // redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    else
+    {
+      $data['page_title'] = "Select Admissions Period Dates";
+      $this->load->view('templates/header', $data);
+      $this->load->view('admissions/period_admissions_header', $data);
+      $this->load->view('templates/select_period_dates');
+      $this->load->view('templates/footer');      # code...
+    }
+
+  }
+  public function show_period_admissions()
+  {
+    if (!$this->ion_auth->logged_in())
+    {
+      // redirect them to the login page
+      redirect('auth/login', 'refresh');
+    }
+    else
+    {
+        $this->form_validation->set_rules('date_start', 'Start Date', 'required');
+        $this->form_validation->set_rules('date_end', 'End Date', 'required');
+        if($this->form_validation->run()==TRUE)
+        {
+          $date_start = $this->input->post('date_start', TRUE);
+          $date_end = $this->input->post('date_end', TRUE);
+          $data['admissions'] = $this->admissions_model->get_period_admissions($date_start, $date_end);
+          $data['page_title'] = "Period Admissions (from ".$date_start." to ".$date_end.")";
+          $this->load->view('templates/header', $data);
+          $this->load->view('admissions/admissions', $data);
+          $this->load->view('templates/footer');
+        }
+        else
+        {
+          if(validation_errors())
+          {
+            $this->session->set_flashdata('message', validation_errors());
+          }
+
+          $data['page_title'] = "Select Admissions Period Dates";
+          $this->load->view('templates/header', $data);
+          $this->load->view('admissions/period_admissions_header', $data);
+          $this->load->view('templates/select_period_dates');
+          $this->load->view('templates/footer');
+
+        }
+      }
   }
 }

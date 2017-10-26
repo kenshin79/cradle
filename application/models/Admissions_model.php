@@ -51,7 +51,7 @@ class Admissions_model extends CI_Model
     $this->db->order_by('time_in', 'DESC');
     $query = $this->db->get('admissions');
     return $query->result();
-  }  
+  }
   public function get_admissions(){
     $this->db->select('id, patient_id, date_in, time_in, source, phic, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
     $this->db->order_by('current_location', 'ASC');
@@ -134,5 +134,28 @@ class Admissions_model extends CI_Model
     $this->db->where('id', $id);
     $this->db->update('admissions', array('disposition'=>$disposition, 'dispo_date'=>$dispo_date, 'dispo_time'=>$dispo_time));
     return $this->db->affected_rows();
+  }
+  public function count_active_admissions($location)
+  {
+    $this->db->where('current_location', $location);
+    $this->db->where('disposition', "Admitted");
+    $this->db->from('admissions');
+    return $this->db->count_all_results();
+  }
+  public function count_all_active_admissions()
+  {
+    $this->db->where('disposition', "Admitted");
+    $this->db->from('admissions');
+    return $this->db->count_all_results();
+  }
+  public function get_period_admissions($date_start, $date_end)
+  {
+    $this->db->select('id, patient_id, date_in, time_in, source, phic, initial_service, current_service, initial_location,current_location, disposition, dispo_date, dispo_time');
+    $this->db->where('date_in >=', $date_start);
+    $this->db->where('date_in<=', $date_end);
+    $this->db->order_by('date_in', 'DESC');
+    $this->db->order_by('time_in', 'DESC');
+    $query = $this->db->get('admissions');
+    return $query->result();
   }
 }

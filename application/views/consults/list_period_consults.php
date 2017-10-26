@@ -1,4 +1,5 @@
 <div class="row">
+  <div class="col-1"></div>
   <div class="col">
     <h3><?php echo $page_title; ?></h3>
   </div>
@@ -14,8 +15,8 @@
     echo "      <th>No.</th>";
     echo "      <th>Patient</th>";
     echo "      <th>Case Number</th>";
-    echo "      <th>Date of Consult</th>";
-    echo "      <th>Time of Consult</th>";
+    echo "      <th>Date/Time of Consult</th>";
+    echo "      <th>Type</th>";
     echo "      <th>Disposition</th>";
     echo "      <th>Date of Dispo</th>";
     echo "      <th>Time of Dispo</th>";
@@ -43,8 +44,9 @@
       echo "<td>".$last_name.", ".$first_name." ".$middle_name;
       echo " ".$age."/".$sex."</td>";
       echo "<td>".$case_number."</td>";
-      echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_date_in/".$row->id."\">".$row->date_in."</a></td>";
-      echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_time_in/".$row->id."\">".$row->time_in."</a></td>";
+      echo "<td>Date: <a class=\"\" href=\"".base_url()."consults/edit_consult_date_in/".$row->id."\">".$row->date_in."</a><br/>";
+      echo "Time: <a class=\"\" href=\"".base_url()."consults/edit_consult_time_in/".$row->id."\">".$row->time_in."</a></td>";
+      echo "<td><a href=\"".base_url()."consults/edit_ed_type/".$row->id."\">".$row->ed_type."</td>";
       echo "<td><a class=\"\" href=\"".base_url()."consults/edit_consult_disposition/".$row->id."/".$row->disposition."\">".$row->disposition."</a></td>";
       echo "<td>".$row->dispo_date."</td>";
       echo "<td>".$row->dispo_time."</td>";
