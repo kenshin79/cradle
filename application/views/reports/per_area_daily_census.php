@@ -24,7 +24,9 @@
 $start = $date_start;
 $end = $date_end;
 $total_patient_days = 0;
-while (strtotime($start) <= strtotime($end)) {
+
+while (strtotime($start) <= strtotime($end))
+{
   $beg_adm = $this->admissions_model->count_day_active_admissions($start, $location);
   $beg_adm_trans = 0;
   foreach ($beg_adm as $row) {
@@ -46,23 +48,29 @@ while (strtotime($start) <= strtotime($end)) {
   $trans_in_and_out = 0;
   foreach ($day_trans_in as $row)
   {
-    if($this->transfers_model->same_day_trans_in_and_out($row->admission_id, $start, $location))
+    if($to = $this->transfers_model->same_day_trans_in_and_out($row->admission_id, $start, $location))
     {
-      $trans_in_and_out = $trans_in_and_out++;
+      $trans_in_and_out++;
+
     }
   }
+  $trans_in_and_dispo = 0;
+  foreach($day_trans_in as $row){
+    if($td = $this->transfers_model->same_day_trans_in_and_dispo($row->admission_id, $start, $location)){
+      $trans_in_and_dispo++;
+    }
+  }
+    $day_transfers_in = count($day_trans_in);
 
-  $day_transfers_in = count($day_trans_in);
+    $day_dispo = $this->admissions_model->count_day_dispo($start, $location);
+    $day_transfers_out = $this->transfers_model->count_day_transfers_out($start, $location);
 
-  $day_dispo = $this->admissions_model->count_day_dispo($start, $location);
-  $day_transfers_out = $this->transfers_model->count_day_transfers_out($start, $location);
+    $adm_dis = $this->admissions_model->count_day_admit_and_dispo($start, $location);
+    $adm_tout = $this->admissions_model->count_day_admit_and_trans_out($start, $location);
 
-  $adm_dis = $this->admissions_model->count_day_admit_and_dispo($start, $location);
-  $adm_tout = $this->admissions_model->count_day_admit_and_trans_out($start, $location);
-
-  $same_day_in_and_out = $adm_dis + $adm_tout + $trans_in_and_out;
-  $end_bal = $beg_bal + $day_admissions + $day_transfers_in - $day_dispo - $day_transfers_out;
-  $service_days = $end_bal + $same_day_in_and_out;
+    $same_day_in_and_out = $adm_dis + $adm_tout + $trans_in_and_out + $trans_in_and_dispo;
+    $end_bal = $beg_bal + $day_admissions + $day_transfers_in - $day_dispo - $day_transfers_out;
+    $service_days = $end_bal + $same_day_in_and_out;
     echo "<tr>";
     echo "<td>".$start."</td>";
     echo "<td>".$beg_bal."</td>";
@@ -74,18 +82,22 @@ while (strtotime($start) <= strtotime($end)) {
     echo "<td>".$end_bal."</td>";
     echo "<td>".$service_days."</td>";
     $start = date ("Y-m-d", strtotime("+1 days", strtotime($start)));
-    $total_patient_days = $total_patient_days + $end_bal;
+    $total_patient_days = $total_patient_days + $service_days;
     echo "</tr>";
 }
 
 ?>
   <tfoot>
     <tr>
-      <th colspan="6"></th>
-      <th>Total = <?php echo $total_patient_days;?></th>
+      <th colspan="7"></th>
+      <th>Total Inpatient Service days</th><th><?php echo $total_patient_days;?></th>
     </tr>
   </tfoot>
 </table>
   </div>
   <div class="col-1"></div>
 </div>
+<?php
+
+echo count($day_trans_in);
+ ?>

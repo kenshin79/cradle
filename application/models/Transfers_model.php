@@ -148,5 +148,17 @@ class Transfers_model extends CI_Model
     $query = $this->db->query($sql, array($admission_id, $date, $location, $location));
     return $query->num_rows();
   }
-
+  public function same_day_trans_in_and_dispo($admission_id, $date, $location)
+  {
+    $sql = "SELECT admissions.id as id FROM admissions, transfers
+            WHERE admission_id = admissions.id
+            AND admissions.id = ?
+            AND date_transfer = ?
+            AND source_location <> ?
+            AND target_location = ?
+            AND disposition <> 'Admitted'
+            AND dispo_date = ?";
+    $query = $this->db->query($sql, array($admission_id, $date, $location, $location, $date));
+    return $query->num_rows();
+  }
 }
