@@ -174,6 +174,9 @@ class Admissions extends CI_Controller {
       case '32':
         $x = "IMU";
         break;
+      case '33':
+        $x = "Spine";
+        break;
       default:
         $x = 1;
         break;
@@ -483,9 +486,10 @@ class Admissions extends CI_Controller {
     }
     else
     {
+      $data['target'] = "admissions/show_period_admissions";
       $data['page_title'] = "Select Admissions Period Dates";
       $this->load->view('templates/header', $data);
-      $this->load->view('admissions/period_admissions_header', $data);
+      $this->load->view('templates/period_reports_header', $data);
       $this->load->view('templates/select_period_dates');
       $this->load->view('templates/footer');      # code...
     }
@@ -518,14 +522,86 @@ class Admissions extends CI_Controller {
           {
             $this->session->set_flashdata('message', validation_errors());
           }
-
+          $data['target'] = "admissions/show_period_admissions";
           $data['page_title'] = "Select Admissions Period Dates";
           $this->load->view('templates/header', $data);
-          $this->load->view('admissions/period_admissions_header', $data);
+          $this->load->view('templates/period_reports_header', $data);
           $this->load->view('templates/select_period_dates');
           $this->load->view('templates/footer');
 
         }
       }
   }
+//reports
+
+  public function daily_census(){
+    $date = "2017-10-24";
+    echo $this->admissions_model->count_day_admissions($date, "Emergency")."<br/>";
+    echo count($ttrans = $this->transfers_model->count_day_transfers_in($date, "Emergency"))."<br/>";
+    $adm = $this->admissions_model->count_day_active_admissions($date, "Emergency");
+    $tran = $this->transfers_model->count_day_active_transfers($date, "Emergency");
+
+    if($adm){
+      foreach ($adm as $row) {
+        echo $row->id." ";
+        if($tout = $this->transfers_model->with_trans_out($row->id, $date, "Emergency")){
+          foreach ($tout as $tow) {
+            echo "(".$tow->id.")";
+          }
+        }
+        else{
+          echo "(none.)";
+        }
+      }
+    }
+    else{
+      echo "none.";
+    }
+
+    echo "<br/>";
+    if($tran){
+      foreach ($tran as $row) {
+        echo $row->admission_id." ";
+        if($ttout = $this->transfers_model->trans_with_trans_out($row->admission_id, $row->date_transfer, $date, "Emergency")){
+          foreach ($ttout as $tow) {
+            echo "(".$tow->id.")";
+          }
+        }
+        else{
+          echo "none.";
+        }
+      }
+    }
+    else{
+      echo "none.";
+    }
+    echo "<br/>";
+    echo $this->admissions_model->count_day_dispo($date, "Emergency");
+    echo "<br/>";
+    $aboth = $this->admissions_model->count_day_admit_and_dispo($date, "Emergency");
+    if($aboth){
+      foreach ($aboth as $row) {
+        echo $row->id." ";
+
+      }
+    }
+    else{
+      echo "none.";
+    }
+    echo "<br/>";
+    if($atrans = $this->transfers_model->same_day_admit_trans_out($date, "Emergency")){
+      foreach ($atrans as $row) {
+        echo $row->tid." ";
+      }
+    }
+    else{
+      echo "none.";
+    }
+
+  echo "<br/>";
+  foreach ($ttrans as $row) {
+      echo $this->transfers_model->same_day_trans_in_and_out($row->admission_id, $date, "Emergency")." ";
+  }
+
+}
 }

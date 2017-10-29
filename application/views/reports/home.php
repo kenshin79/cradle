@@ -64,7 +64,8 @@
         <td><a class="btn btn-light" href="<?php echo base_url()."admissions/show_active_admissions/29";?>">Neonatal ICU (<?php echo $this->admissions_model->count_active_admissions("NICU");?>)</a></td>
         <td><a class="btn btn-light" href="<?php echo base_url()."admissions/show_active_admissions/27";?>">Neuro ICU (<?php echo $this->admissions_model->count_active_admissions("Neuro ICU");?>)</a></td>
         <td><a class="btn btn-light" href="<?php echo base_url()."admissions/show_active_admissions/28";?>">NSSCU (<?php echo $this->admissions_model->count_active_admissions("NSSCU");?>)</a></td>
-        <td><a class="btn btn-light" href="<?php echo base_url()."admissions/show_active_admissions/32";?>">IMU (<?php echo $this->admissions_model->count_active_admissions("IMU");?>)</a></td><td></td>
+        <td><a class="btn btn-light" href="<?php echo base_url()."admissions/show_active_admissions/32";?>">IMU (<?php echo $this->admissions_model->count_active_admissions("IMU");?>)</a></td>
+        <td><a class="btn btn-light" href="<?php echo base_url()."admissions/show_active_admissions/33";?>">Spine (<?php echo $this->admissions_model->count_active_admissions("Spine");?>)</a></td>
       </tr>
     </table>
   </div>

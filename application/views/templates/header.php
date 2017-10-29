@@ -44,6 +44,16 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle btn" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Reports
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="<?php echo base_url()."reports/daily_hospital";?>">Daily Hospital Inpatient</a>
+                <a class="dropdown-item" href="<?php echo base_url()."reports/daily_area";?>">Daily Area Inpatient</a>
+
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle btn" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Census
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

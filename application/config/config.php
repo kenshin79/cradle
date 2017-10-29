@@ -615,6 +615,7 @@ $config['location'] = array(
     'Ward 14B'=>'Ward 14B',
     'Ward 15'=>'Ward 15',
     'Ward 16'=>'Ward 16',
+    'Spine'=>'Spine',
     'CI'=>'CI',
     'SOJR'=>'SOJR',
     'Hema-Onco'=>'Hema-Onco',
