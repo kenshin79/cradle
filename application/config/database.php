@@ -70,15 +70,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = 'cradle';
+$active_group = '';
 $query_builder = TRUE;
 
-$db['cradle'] = array(
+$db['db1'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'theidiot',
-	'database' => 'cradle',
+	'username' => '',
+	'password' => '',
+	'database' => '',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -95,12 +95,12 @@ $db['cradle'] = array(
 	'save_queries' => TRUE
 );
 
-$db['mpi'] = array(
+$db['db2'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'theidiot',
-	'database' => 'mpi',
+	'username' => '',
+	'password' => '',
+	'database' => '',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
